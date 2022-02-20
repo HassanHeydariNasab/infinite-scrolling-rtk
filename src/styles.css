@@ -1,0 +1,27 @@
+html,
+body {
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+}
+#root {
+  height: 100%;
+}
+
+#container {
+  height: 100%;
+  overflow: hidden scroll;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  background-color: bisque;
+  margin: 4px;
+  min-height: 100px;
+}
+
+#loading {
+  color: white;
+}
