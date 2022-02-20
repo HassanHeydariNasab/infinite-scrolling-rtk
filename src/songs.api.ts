@@ -31,8 +31,25 @@ export const songsApi = createApi({
           }, 1000);
         });
       }
+    }),
+    // 2nd solution
+    getAllSongs: builder.query<Result<Song>, void>({
+      queryFn: (_, { getState }) => {
+        let state = getState();
+        let songs: Song[] = [];
+        for (let offset = 0; offset < 100; offset += 10) {
+          const { data } = songsApi.endpoints.getSongs.select({
+            offset,
+            limit: 10
+          })(state as any);
+          if (data && data.list) {
+            songs.push(...data!.list);
+          }
+        }
+        return Promise.resolve({ data: { total: 100, list: songs as Song[] } });
+      }
     })
   })
 });
 
-export const { useGetSongsQuery } = songsApi;
+export const { useGetSongsQuery, useGetAllSongsQuery } = songsApi;

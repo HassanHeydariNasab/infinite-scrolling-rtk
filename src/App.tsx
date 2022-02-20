@@ -1,5 +1,5 @@
 import { UIEventHandler, useEffect, useState } from "react";
-import { Song, useGetSongsQuery } from "./songs.api";
+import { Song, useGetAllSongsQuery, useGetSongsQuery } from "./songs.api";
 import "./styles.css";
 
 const LIMIT = 10;
@@ -10,6 +10,12 @@ export default function App() {
     offset,
     limit: LIMIT
   });
+
+  // 2nd solution
+  const { data: allSongs, refetch: refetchAllSongs } = useGetAllSongsQuery();
+  useEffect(() => {
+    console.log({ allSongs });
+  }, [allSongs]);
 
   useEffect(() => {
     if (data && originalArgs) {
@@ -24,6 +30,8 @@ export default function App() {
         );
         return currentSongs;
       });
+      // 2nd solution
+      refetchAllSongs();
     }
   }, [data]);
 
